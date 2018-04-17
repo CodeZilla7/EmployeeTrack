@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
             
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int id = (int) viewHolder.itemView.getTag();
-                viewModel.deleteEmployee(id);
+                Employee employee = (Employee) viewHolder.itemView.getTag();
+                viewModel.deleteEmployee(employee);
             }
         }).attachToRecyclerView(mRecyclerView);
         
@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
     
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        startActivity(new Intent(MainActivity.this, EditorActivity.class));
+        Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+        intent.addCategory("EXISTING EMPLOYEE");
+        startActivity(intent);
     }
 }

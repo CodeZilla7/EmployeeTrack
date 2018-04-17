@@ -31,11 +31,13 @@ public class Employee {
     private String employeeName;
     private String employeeRole;
     private int employeeAge;
+    private String photoPath;
     
-    public Employee(String employeeName, String employeeRole, int employeeAge) {
+    public Employee(String employeeName, String employeeRole, int employeeAge, String photoPath) {
         this.employeeName = employeeName;
         this.employeeRole = employeeRole;
         this.employeeAge = employeeAge;
+        this.photoPath = photoPath;
     }
     
     @NonNull
@@ -59,4 +61,7 @@ public class Employee {
         return employeeAge;
     }
     
+    public String getPhotoPath() {
+        return photoPath;
+    }
 }

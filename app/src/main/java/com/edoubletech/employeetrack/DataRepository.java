@@ -65,6 +65,15 @@ public class DataRepository {
         });
     }
     
+    public void deleteEmployee(final Employee employee) {
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDao.deleteEmployee(employee);
+            }
+        });
+    }
+    
     public void deleteEmployeeWithId(final int id) {
         mExecutors.diskIO().execute(new Runnable() {
             @Override

@@ -55,7 +55,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         Employee employee = mEmployees.get(position);
         holder.employeeName.setText(employee.getEmployeeName());
         holder.employeeRole.setText(employee.getEmployeeRole());
-        holder.itemView.setTag(employee.getEmployeeId());
+        holder.itemView.setTag(employee);
     }
     
     @Override
@@ -83,6 +83,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         EmployeeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
         
         @Override

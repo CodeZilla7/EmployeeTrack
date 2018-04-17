@@ -19,13 +19,17 @@ package com.edoubletech.employeetrack;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.edoubletech.employeetrack.data.Employee;
 
 import butterknife.BindView;
@@ -41,6 +45,14 @@ public class EditorActivity extends AppCompatActivity {
     EditText employeeRole;
     @BindView(R.id.save_button)
     Button saveButton;
+    @BindView(R.id.image_picker_button)
+    Button imagePicker;
+    @BindView(R.id.employee_image)
+    ImageView employee_image;
+    
+    Uri photoUri;
+    
+    public static final int IMAGE_PICKER_REQUEST_CODE = 200;
     
     EditorActivityViewModel viewModel;
     
@@ -59,23 +71,53 @@ public class EditorActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = employeeName.getText().toString().trim();
-                String stringAge = employeeAge.getText().toString().trim();
-                int age = Integer.parseInt(stringAge);
-                String role = employeeRole.getText().toString().trim();
-                
-                if (name.isEmpty() && stringAge.isEmpty() && role.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "You must provide valid details",
+                if (employeeName.getText().toString().isEmpty() || employeeAge.getText().toString
+                        ().isEmpty() || employeeRole.getText().toString().isEmpty() ||
+                        photoUri == null) {
+                    Toast.makeText(EditorActivity.this, "You must provide valid details",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Employee employee = new Employee(name, role, age);
+                    String name = employeeName.getText().toString().trim();
+                    String stringAge = employeeAge.getText().toString().trim();
+                    int age = Integer.parseInt(stringAge);
+                    String role = employeeRole.getText().toString().trim();
+                    String photoPath = photoUri.getPath();
+                    Employee employee = new Employee(name, role, age, photoPath);
                     viewModel.insertEmployee(employee);
                     Intent replyIntent = new Intent(EditorActivity.this, MainActivity.class);
                     startActivity(replyIntent);
+                    finish();
                 }
+            }
+        });
+        
+        imagePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilePicker();
             }
         });
     }
     
+    public void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Choose an image for the employee"),
+                IMAGE_PICKER_REQUEST_CODE);
+    }
     
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case IMAGE_PICKER_REQUEST_CODE:
+                Log.v("REQUEST CODE", Integer.toString(IMAGE_PICKER_REQUEST_CODE));
+                if (resultCode == RESULT_OK && data != null) {
+                    employee_image.setVisibility(View.VISIBLE);
+                    photoUri = data.getData();
+                    Glide.with(EditorActivity.this).load(photoUri).into(employee_image);
+                }
+                break;
+        }
+    }
 }

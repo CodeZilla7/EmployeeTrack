@@ -44,4 +44,8 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void deleteEmployee(int id) {
         mRepository.deleteEmployeeWithId(id);
     }
+    
+    public void deleteEmployee(Employee employee) {
+        mRepository.deleteEmployee(employee);
+    }
 }
