@@ -33,7 +33,7 @@ public class DataRepository {
     private LiveData<List<Employee>> listOfEmployees;
     private AppExecutors mExecutors;
     
-    public DataRepository(Application application) {
+    private DataRepository(Application application) {
         EmployeeDatabase database = EmployeeDatabase.getInstance(application);
         this.mExecutors = AppExecutors.getInstance();
         this.mDao = database.employeeDao();
@@ -56,7 +56,7 @@ public class DataRepository {
     }
     
     
-    public void insertEmployee(final Employee... employees) {
+    public void insertEmployee(final Employee employees) {
         mExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +73,15 @@ public class DataRepository {
             }
         });
     }
-    
+   
+    public void update(final Employee employee){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDao.update(employee);
+            }
+        });
+    }
     public void deleteEmployeeWithId(final int id) {
         mExecutors.diskIO().execute(new Runnable() {
             @Override

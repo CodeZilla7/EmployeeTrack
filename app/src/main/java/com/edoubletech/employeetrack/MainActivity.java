@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+        intent.putExtra("ID", clickedItemIndex);
         intent.addCategory("EXISTING EMPLOYEE");
         startActivity(intent);
     }

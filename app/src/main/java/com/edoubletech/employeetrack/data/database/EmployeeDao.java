@@ -22,6 +22,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.edoubletech.employeetrack.data.Employee;
 
@@ -40,7 +41,14 @@ public interface EmployeeDao {
     LiveData<Employee> getAnEmployee(int employeeId);
     
     @Insert
-    void insertEmployee(Employee...employees);
+    void insertEmployee(Employee employees);
+    
+    @Query("UPDATE employee SET employeeName = :name, employeeRole = :role,  photoPath = :path, " +
+            "employeeAge = :age")
+    void updateEmployee(String name, String role, String path, int age);
+    
+    @Update
+    void update(Employee employee);
     
     @Delete
     void deleteEmployee(Employee employee);

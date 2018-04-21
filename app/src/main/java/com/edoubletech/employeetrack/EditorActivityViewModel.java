@@ -32,7 +32,7 @@ public class EditorActivityViewModel extends AndroidViewModel {
         mRepository = DataRepository.getInstance(application);
     }
     
-    public void insertEmployee(Employee... employees) {
+    public void insertEmployee(Employee employees) {
         mRepository.insertEmployee(employees);
     }
     

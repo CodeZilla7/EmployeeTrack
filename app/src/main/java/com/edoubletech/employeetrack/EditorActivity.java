@@ -66,28 +66,14 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
         
+        Intent parentIntent = getIntent();
+        
         viewModel = ViewModelProviders.of(this).get(EditorActivityViewModel.class);
         
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (employeeName.getText().toString().isEmpty() || employeeAge.getText().toString
-                        ().isEmpty() || employeeRole.getText().toString().isEmpty() ||
-                        photoUri == null) {
-                    Toast.makeText(EditorActivity.this, "You must provide valid details",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    String name = employeeName.getText().toString().trim();
-                    String stringAge = employeeAge.getText().toString().trim();
-                    int age = Integer.parseInt(stringAge);
-                    String role = employeeRole.getText().toString().trim();
-                    String photoPath = photoUri.getPath();
-                    Employee employee = new Employee(name, role, age, photoPath);
-                    viewModel.insertEmployee(employee);
-                    Intent replyIntent = new Intent(EditorActivity.this, MainActivity.class);
-                    startActivity(replyIntent);
-                    finish();
-                }
+                saveEmployee();
             }
         });
         
@@ -118,6 +104,26 @@ public class EditorActivity extends AppCompatActivity {
                     Glide.with(EditorActivity.this).load(photoUri).into(employee_image);
                 }
                 break;
+        }
+    }
+    
+    private void saveEmployee() {
+        if (employeeName.getText().toString().isEmpty() || employeeAge.getText().toString
+                ().isEmpty() || employeeRole.getText().toString().isEmpty() ||
+                photoUri == null) {
+            Toast.makeText(EditorActivity.this, "You must provide valid details",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            String name = employeeName.getText().toString().trim();
+            String stringAge = employeeAge.getText().toString().trim();
+            int age = Integer.parseInt(stringAge);
+            String role = employeeRole.getText().toString().trim();
+            String photoPath = photoUri.getPath();
+            Employee employee = new Employee(name, role, age, photoPath);
+            viewModel.insertEmployee(employee);
+            Intent replyIntent = new Intent(EditorActivity.this, MainActivity.class);
+            startActivity(replyIntent);
+            finish();
         }
     }
 }
