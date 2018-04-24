@@ -18,31 +18,29 @@
 package com.edoubletech.employeetrack;
 
 import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
 import com.edoubletech.employeetrack.data.DataRepository;
-import com.edoubletech.employeetrack.data.Employee;
 
 import javax.inject.Inject;
 
-public class EditorActivityViewModel extends ViewModel {
+public class Factory extends ViewModelProvider.NewInstanceFactory {
     
-    DataRepository mRepository;
+    DataRepository repository;
     
     @Inject
-    EditorActivityViewModel(DataRepository repository) {
-        this.mRepository = repository;
+    public Factory(DataRepository repository) {
+        this.repository = repository;
     }
     
-    public void insertEmployee(Employee employees) {
-        mRepository.insertEmployee(employees);
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
+            return (T) new MainActivityViewModel(repository);
+        } else if (modelClass.isAssignableFrom(EditorActivityViewModel.class)) {
+            return (T) new EditorActivityViewModel(repository);
+        } else throw new IllegalArgumentException("Wrong view model");
     }
-    
-    public Employee getEmployee(int employeeId) {
-        return mRepository.getEmployeeById(employeeId);
-    }
-    
-    public void updateEmployee(Employee employee) {
-        mRepository.update(employee);
-    }
-    
 }

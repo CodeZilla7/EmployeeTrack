@@ -15,46 +15,35 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.data;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.AppExecutors;
 import com.edoubletech.employeetrack.data.database.EmployeeDao;
-import com.edoubletech.employeetrack.data.database.EmployeeDatabase;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class DataRepository {
     
-    private static DataRepository sInstance;
-    private EmployeeDao mDao;
-    private LiveData<List<Employee>> listOfEmployees;
-    private AppExecutors mExecutors;
+    EmployeeDao mDao;
+    AppExecutors mExecutors;
     
-    private DataRepository(Application application) {
-        EmployeeDatabase database = EmployeeDatabase.getInstance(application);
-        this.mExecutors = AppExecutors.getInstance();
-        this.mDao = database.employeeDao();
-        this.listOfEmployees = mDao.getListOfEmployees();
-    }
-    
-    public static DataRepository getInstance(Application application) {
-        if (sInstance == null) {
-            synchronized (DataRepository.class) {
-                if (sInstance == null) {
-                    sInstance = new DataRepository(application);
-                }
-            }
-        }
-        return sInstance;
+    @Inject
+    public DataRepository(EmployeeDao dao, AppExecutors executors){
+        this.mDao = dao;
+        this.mExecutors = executors;
     }
     
     public LiveData<List<Employee>> getListOfEmployees() {
-        return listOfEmployees;
+        return mDao.getListOfEmployees();
     }
     
+    public Employee getEmployeeById(int employeeId) {
+        return mDao.getAnEmployee(employeeId);
+    }
     
     public void insertEmployee(final Employee employees) {
         mExecutors.diskIO().execute(new Runnable() {
@@ -73,8 +62,8 @@ public class DataRepository {
             }
         });
     }
-   
-    public void update(final Employee employee){
+    
+    public void update(final Employee employee) {
         mExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -82,6 +71,7 @@ public class DataRepository {
             }
         });
     }
+    
     public void deleteEmployeeWithId(final int id) {
         mExecutors.diskIO().execute(new Runnable() {
             @Override

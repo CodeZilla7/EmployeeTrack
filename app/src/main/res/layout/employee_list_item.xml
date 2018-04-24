@@ -23,10 +23,10 @@
     android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:src="@mipmap/ic_launcher_round"
         android:id="@+id/circleImageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:src="@mipmap/ic_launcher_round"
         app:civ_border_color="@android:color/darker_gray"
         app:civ_border_width="2dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,12 +54,22 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:textColor="#AEB6BD"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toBottomOf="@+id/name_text_view"
         tools:text="Junior Android Developer" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#555551"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
 
 </android.support.constraint.ConstraintLayout>

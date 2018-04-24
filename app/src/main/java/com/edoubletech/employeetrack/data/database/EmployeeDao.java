@@ -38,14 +38,10 @@ public interface EmployeeDao {
     void deleteSingleEmployee(int employeeId);
     
     @Query("SELECT * FROM employee WHERE employeeId = :employeeId")
-    LiveData<Employee> getAnEmployee(int employeeId);
+    Employee getAnEmployee(int employeeId);
     
     @Insert
     void insertEmployee(Employee employees);
-    
-    @Query("UPDATE employee SET employeeName = :name, employeeRole = :role,  photoPath = :path, " +
-            "employeeAge = :age")
-    void updateEmployee(String name, String role, String path, int age);
     
     @Update
     void update(Employee employee);

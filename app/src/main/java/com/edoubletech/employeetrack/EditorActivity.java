@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.edoubletech.employeetrack.data.Employee;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -50,6 +52,9 @@ public class EditorActivity extends AppCompatActivity {
     @BindView(R.id.employee_image)
     ImageView employee_image;
     
+    @Inject
+    Factory factory;
+    
     Uri photoUri;
     
     public static final int IMAGE_PICKER_REQUEST_CODE = 200;
@@ -65,10 +70,22 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
-        
+        ((EmployeeTrack) getApplication()).getAppComponent()
+                .inject(this);
         Intent parentIntent = getIntent();
         
-        viewModel = ViewModelProviders.of(this).get(EditorActivityViewModel.class);
+        viewModel = ViewModelProviders.of(this, factory).get(EditorActivityViewModel.class);
+        
+        if (parentIntent.hasCategory(MainActivity.EXISTING_EMPLOYEE)) {
+            int id = parentIntent.getIntExtra(MainActivity.EMPLOYEE_ID_EXTRA, -1);
+            Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            Employee employee = viewModel.getEmployee(id);
+            if (employee != null) {
+                employeeRole.setText(employee.getEmployeeRole());
+                employeeName.setText(employee.getEmployeeName());
+                employeeAge.setText(String.valueOf(employee.getEmployeeAge()));
+            }
+        }
         
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +93,7 @@ public class EditorActivity extends AppCompatActivity {
                 saveEmployee();
             }
         });
-        
+
         imagePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +108,7 @@ public class EditorActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Choose an image for the employee"),
                 IMAGE_PICKER_REQUEST_CODE);
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -102,15 +119,14 @@ public class EditorActivity extends AppCompatActivity {
                     employee_image.setVisibility(View.VISIBLE);
                     photoUri = data.getData();
                     Glide.with(EditorActivity.this).load(photoUri).into(employee_image);
+                    break;
                 }
-                break;
         }
     }
     
     private void saveEmployee() {
         if (employeeName.getText().toString().isEmpty() || employeeAge.getText().toString
-                ().isEmpty() || employeeRole.getText().toString().isEmpty() ||
-                photoUri == null) {
+                ().isEmpty() || employeeRole.getText().toString().isEmpty()) {
             Toast.makeText(EditorActivity.this, "You must provide valid details",
                     Toast.LENGTH_SHORT).show();
         } else {
@@ -118,12 +134,12 @@ public class EditorActivity extends AppCompatActivity {
             String stringAge = employeeAge.getText().toString().trim();
             int age = Integer.parseInt(stringAge);
             String role = employeeRole.getText().toString().trim();
-            String photoPath = photoUri.getPath();
-            Employee employee = new Employee(name, role, age, photoPath);
+            Employee employee = new Employee(name, role, age);
             viewModel.insertEmployee(employee);
             Intent replyIntent = new Intent(EditorActivity.this, MainActivity.class);
             startActivity(replyIntent);
             finish();
         }
     }
+    
 }

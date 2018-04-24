@@ -15,15 +15,20 @@
  *
  */
 
-package com.edoubletech.employeetrack.data.database;
+package com.edoubletech.employeetrack.dagger;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import com.edoubletech.employeetrack.EditorActivity;
+import com.edoubletech.employeetrack.MainActivity;
 
-import com.edoubletech.employeetrack.data.Employee;
+import javax.inject.Singleton;
 
-@Database(entities = {Employee.class}, version = 1, exportSchema = false)
-public abstract class EmployeeDatabase extends RoomDatabase {
+import dagger.Component;
+
+@Component(modules = {AppModule.class})
+@Singleton
+public interface AppComponent {
     
-    public abstract EmployeeDao employeeDao();
+    void inject(MainActivity mainActivity);
+    
+    void inject(EditorActivity editorActivity);
 }

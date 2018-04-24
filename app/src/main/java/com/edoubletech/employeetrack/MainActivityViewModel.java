@@ -17,28 +17,27 @@
 
 package com.edoubletech.employeetrack;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import android.arch.lifecycle.ViewModel;
 
+import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.data.Employee;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class MainActivityViewModel extends ViewModel {
     
-    private LiveData<List<Employee>> mListOfEmployees;
-    private DataRepository mRepository;
+    DataRepository mRepository;
     
-    public MainActivityViewModel(@NonNull Application application) {
-        super(application);
-        mRepository = DataRepository.getInstance(application);
-        mListOfEmployees = mRepository.getListOfEmployees();
+    @Inject
+    MainActivityViewModel(DataRepository repository) {
+        this.mRepository = repository;
     }
     
     public LiveData<List<Employee>> getListOfEmployees() {
-        return mListOfEmployees;
+        return mRepository.getListOfEmployees();
     }
     
     public void deleteEmployee(int id) {

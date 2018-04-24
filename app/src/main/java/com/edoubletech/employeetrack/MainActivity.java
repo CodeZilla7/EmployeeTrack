@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -34,20 +33,27 @@ import com.edoubletech.employeetrack.data.Employee;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements EmployeeAdapter.ListItemClickListener {
     
+    public static final String EMPLOYEE_ID_EXTRA = "EXTRA_EMPLOYEE_ID";
     @BindView(R.id.main_activity_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     
+    @Inject
+    Factory factory;
+    
     MainActivityViewModel viewModel;
     EmployeeAdapter mAdapter;
     
     public static final int EDITOR_ACTIVITY_REQUEST_CODE = 1001;
+    public static final String EXISTING_EMPLOYEE = "EXISTING EMPLOYEE CATEGORY";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        ((EmployeeTrack) getApplication()).getAppComponent().inject(this);
         
-        mAdapter = new EmployeeAdapter(this, getApplicationContext());
+        viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
+        mAdapter = new EmployeeAdapter(this, this);
+        
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext()
-                , DividerItemDecoration.HORIZONTAL));
         
         mRecyclerView.setAdapter(mAdapter);
         viewModel.getListOfEmployees().observe(this, new Observer<List<Employee>>() {
@@ -72,10 +78,11 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
             }
         });
         
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT |
-                ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
                 return false;
             }
             
@@ -98,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-        intent.putExtra("ID", clickedItemIndex);
-        intent.addCategory("EXISTING EMPLOYEE");
+        intent.putExtra(EMPLOYEE_ID_EXTRA, clickedItemIndex);
+        intent.addCategory(EXISTING_EMPLOYEE);
         startActivity(intent);
     }
 }
