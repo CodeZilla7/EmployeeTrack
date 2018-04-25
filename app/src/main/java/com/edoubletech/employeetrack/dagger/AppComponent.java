@@ -18,17 +18,17 @@
 package com.edoubletech.employeetrack.dagger;
 
 import com.edoubletech.employeetrack.EditorActivity;
-import com.edoubletech.employeetrack.MainActivity;
+import com.edoubletech.employeetrack.Factory;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Component(modules = {AppModule.class})
 @Singleton
+@Component(modules = {AppModule.class})
 public interface AppComponent {
     
-    void inject(MainActivity mainActivity);
-    
     void inject(EditorActivity editorActivity);
+    
+    Factory exposeFactory();
 }
