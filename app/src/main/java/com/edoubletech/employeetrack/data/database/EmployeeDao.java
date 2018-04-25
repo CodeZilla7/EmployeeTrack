@@ -31,7 +31,7 @@ import java.util.List;
 @Dao
 public interface EmployeeDao {
     
-    @Query("SELECT * FROM employee")
+    @Query("SELECT * FROM employee ORDER BY employeeName ASC")
     LiveData<List<Employee>> getListOfEmployees();
     
     @Query("DELETE FROM employee WHERE employeeId = :employeeId")

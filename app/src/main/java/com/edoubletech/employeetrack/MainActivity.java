@@ -33,27 +33,23 @@ import com.edoubletech.employeetrack.data.Employee;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements EmployeeAdapter.ListItemClickListener {
     
     public static final String EMPLOYEE_ID_EXTRA = "EXTRA_EMPLOYEE_ID";
+    public static final String EXISTING_EMPLOYEE = "EXISTING EMPLOYEE CATEGORY";
+    
     @BindView(R.id.main_activity_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     
-    @Inject
     Factory factory;
     
     MainActivityViewModel viewModel;
     EmployeeAdapter mAdapter;
-    
-    public static final int EDITOR_ACTIVITY_REQUEST_CODE = 1001;
-    public static final String EXISTING_EMPLOYEE = "EXISTING EMPLOYEE CATEGORY";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         
-        ((EmployeeTrack) getApplication()).getAppComponent().inject(this);
+        factory = ((EmployeeTrack) getApplication()).getAppComponent().exposeFactory();
         
         viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         
@@ -71,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
                 LinearLayoutManager.VERTICAL, false));
         
         mRecyclerView.setAdapter(mAdapter);
+        
         viewModel.getListOfEmployees().observe(this, new Observer<List<Employee>>() {
             @Override
             public void onChanged(@Nullable List<Employee> employees) {

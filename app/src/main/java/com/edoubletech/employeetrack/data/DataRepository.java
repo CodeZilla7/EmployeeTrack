@@ -28,11 +28,11 @@ import javax.inject.Inject;
 
 public class DataRepository {
     
-    EmployeeDao mDao;
-    AppExecutors mExecutors;
+    private EmployeeDao mDao;
+    private AppExecutors mExecutors;
     
     @Inject
-    public DataRepository(EmployeeDao dao, AppExecutors executors){
+    public DataRepository(EmployeeDao dao, AppExecutors executors) {
         this.mDao = dao;
         this.mExecutors = executors;
     }

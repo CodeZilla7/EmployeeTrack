@@ -18,12 +18,12 @@
 package com.edoubletech.employeetrack.dagger;
 
 
-import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 
 import com.edoubletech.employeetrack.AppExecutors;
-import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.Factory;
+import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.data.database.EmployeeDao;
 import com.edoubletech.employeetrack.data.database.EmployeeDatabase;
 
@@ -37,15 +37,15 @@ import dagger.Provides;
 @Module
 public class AppModule {
     
-    private Application mContext;
+    private Context mContext;
     
-    public AppModule(Application application) {
-        this.mContext = application;
+    public AppModule(Context context) {
+        this.mContext = context;
     }
     
     @Singleton
     @Provides
-    AppExecutors provideAppExecutors(){
+    AppExecutors provideAppExecutors() {
         return new AppExecutors(Executors.newSingleThreadExecutor(),
                 Executors.newFixedThreadPool(3),
                 new AppExecutors.MainThreadExecutor());

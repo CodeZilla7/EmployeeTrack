@@ -39,6 +39,8 @@ import butterknife.ButterKnife;
 
 public class EditorActivity extends AppCompatActivity {
     
+    public static final int IMAGE_PICKER_REQUEST_CODE = 200;
+    
     @BindView(R.id.employee_name_text_view)
     EditText employeeName;
     @BindView(R.id.employee_age_text_view)
@@ -56,22 +58,18 @@ public class EditorActivity extends AppCompatActivity {
     Factory factory;
     
     Uri photoUri;
-    
-    public static final int IMAGE_PICKER_REQUEST_CODE = 200;
-    
     EditorActivityViewModel viewModel;
-    
-    public static final String EXTRA_NAME = "com.edoubletech.employeetrack.EXTRA_NAME";
-    public static final String EXTRA_AGE = "com.edoubletech.employeetrack.EXTRA_AGE";
-    public static final String EXTRA_ROLE = "com.edoubletech.employeetrack.EXTRA_ROLE";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+    
         ButterKnife.bind(this);
+    
         ((EmployeeTrack) getApplication()).getAppComponent()
                 .inject(this);
+    
         Intent parentIntent = getIntent();
         
         viewModel = ViewModelProviders.of(this, factory).get(EditorActivityViewModel.class);
@@ -93,7 +91,7 @@ public class EditorActivity extends AppCompatActivity {
                 saveEmployee();
             }
         });
-
+        
         imagePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +106,7 @@ public class EditorActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Choose an image for the employee"),
                 IMAGE_PICKER_REQUEST_CODE);
     }
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
