@@ -18,7 +18,7 @@
 package com.edoubletech.employeetrack.dagger;
 
 import com.edoubletech.employeetrack.EditorActivity;
-import com.edoubletech.employeetrack.Factory;
+import com.edoubletech.employeetrack.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -30,5 +30,5 @@ public interface AppComponent {
     
     void inject(EditorActivity editorActivity);
     
-    Factory exposeFactory();
+    void inject(MainActivity mainActivity);
 }

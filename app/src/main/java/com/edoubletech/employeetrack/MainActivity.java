@@ -33,6 +33,8 @@ import com.edoubletech.employeetrack.data.Employee;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     
+    @Inject
     Factory factory;
     
     MainActivityViewModel viewModel;
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         
-        factory = ((EmployeeTrack) getApplication()).getAppComponent().exposeFactory();
+        ((EmployeeTrack) getApplication()).getAppComponent()
+                .inject(this);
         
         viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         
