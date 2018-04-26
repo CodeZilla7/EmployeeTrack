@@ -64,12 +64,10 @@ public class EditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-    
+        
         ButterKnife.bind(this);
-    
-        ((EmployeeTrack) getApplication()).getAppComponent()
-                .inject(this);
-    
+        EmployeeTrack.getAppComponent().inject(this);
+        
         Intent parentIntent = getIntent();
         
         viewModel = ViewModelProviders.of(this, factory).get(EditorActivityViewModel.class);

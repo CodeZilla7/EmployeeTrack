@@ -60,8 +60,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         
-        ((EmployeeTrack) getApplication()).getAppComponent()
-                .inject(this);
+        EmployeeTrack.getAppComponent().inject(this);
         
         viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         

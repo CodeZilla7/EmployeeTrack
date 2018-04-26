@@ -29,7 +29,7 @@ public class EditorActivityViewModel extends ViewModel {
     DataRepository mRepository;
     
     @Inject
-    EditorActivityViewModel(DataRepository repository) {
+    public EditorActivityViewModel(DataRepository repository) {
         this.mRepository = repository;
     }
     

@@ -25,7 +25,7 @@ import com.edoubletech.employeetrack.dagger.DaggerAppComponent;
 
 public class EmployeeTrack extends Application {
     
-    private AppComponent appComponent;
+    private static AppComponent appComponent;
     
     @Override
     public void onCreate() {
@@ -37,7 +37,7 @@ public class EmployeeTrack extends Application {
                 .build();
     }
     
-    public AppComponent getAppComponent() {
+    public static AppComponent getAppComponent() {
         return appComponent;
     }
 }
