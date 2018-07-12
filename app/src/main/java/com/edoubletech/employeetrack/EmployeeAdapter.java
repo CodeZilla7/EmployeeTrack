@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
     
     public interface ListItemClickListener {
-        void onListItemClick(int clickedItemIndex);
+        void onListItemClick(int employeeId);
     }
     
     class EmployeeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -88,8 +88,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition() + 1;
-            mListener.onListItemClick(position);
+            Employee employee = (Employee) itemView.getTag();
+            mListener.onListItemClick(employee.getEmployeeId());
         }
     }
 }

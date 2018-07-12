@@ -19,9 +19,9 @@ package com.edoubletech.employeetrack;
 
 import android.app.Application;
 
-import com.edoubletech.employeetrack.dagger.AppComponent;
-import com.edoubletech.employeetrack.dagger.AppModule;
-import com.edoubletech.employeetrack.dagger.DaggerAppComponent;
+import com.edoubletech.employeetrack.injection.AppComponent;
+import com.edoubletech.employeetrack.injection.AppModule;
+import com.edoubletech.employeetrack.injection.DaggerAppComponent;
 
 public class EmployeeTrack extends Application {
     

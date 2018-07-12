@@ -19,66 +19,44 @@ package com.edoubletech.employeetrack.data;
 
 import android.arch.lifecycle.LiveData;
 
-import com.edoubletech.employeetrack.AppExecutors;
 import com.edoubletech.employeetrack.data.database.EmployeeDao;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class DataRepository {
-    
+
     private EmployeeDao mDao;
-    private AppExecutors mExecutors;
-    
+
     @Inject
-    public DataRepository(EmployeeDao dao, AppExecutors executors) {
+    public DataRepository(EmployeeDao dao) {
         this.mDao = dao;
-        this.mExecutors = executors;
     }
-    
+
     public LiveData<List<Employee>> getListOfEmployees() {
         return mDao.getListOfEmployees();
     }
-    
+
     public Employee getEmployeeById(int employeeId) {
         return mDao.getAnEmployee(employeeId);
     }
-    
-    public void insertEmployee(final Employee employees) {
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDao.insertEmployee(employees);
-            }
-        });
+
+    public void insertEmployee(Employee employees) {
+        mDao.insertEmployee(employees);
     }
-    
-    public void deleteEmployee(final Employee employee) {
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDao.deleteEmployee(employee);
-            }
-        });
+
+    public void deleteEmployee(Employee employee) {
+        mDao.deleteEmployee(employee);
     }
-    
-    public void update(final Employee employee) {
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDao.update(employee);
-            }
-        });
+
+    public void update(Employee employee) {
+        mDao.update(employee);
     }
-    
-    public void deleteEmployeeWithId(final int id) {
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDao.deleteSingleEmployee(id);
-            }
-        });
+
+    public void deleteEmployeeWithId(int id) {
+        mDao.deleteSingleEmployee(id);
     }
-    
+
 }

@@ -20,7 +20,7 @@ package com.edoubletech.employeetrack.data.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 @Database(entities = {Employee.class}, version = 1, exportSchema = false)
 public abstract class EmployeeDatabase extends RoomDatabase {

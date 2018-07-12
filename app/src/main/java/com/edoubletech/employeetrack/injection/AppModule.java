@@ -15,19 +15,16 @@
  *
  */
 
-package com.edoubletech.employeetrack.dagger;
+package com.edoubletech.employeetrack.injection;
 
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.edoubletech.employeetrack.AppExecutors;
 import com.edoubletech.employeetrack.Factory;
 import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.data.database.EmployeeDao;
 import com.edoubletech.employeetrack.data.database.EmployeeDatabase;
-
-import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -36,33 +33,25 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
-    
+
     private Context mContext;
-    
+
     public AppModule(Context context) {
         this.mContext = context;
     }
-    
+
     @Singleton
     @Provides
-    AppExecutors provideAppExecutors() {
-        return new AppExecutors(Executors.newSingleThreadExecutor(),
-                Executors.newFixedThreadPool(3),
-                new AppExecutors.MainThreadExecutor());
+    DataRepository provideDataRepository(EmployeeDao dao) {
+        return new DataRepository(dao);
     }
-    
-    @Singleton
-    @Provides
-    DataRepository provideDataRepository(AppExecutors executors, EmployeeDao dao) {
-        return new DataRepository(dao, executors);
-    }
-    
+
     @Singleton
     @Provides
     Factory provideFactory(DataRepository repository) {
         return new Factory(repository);
     }
-    
+
     @Singleton
     @Provides
     EmployeeDatabase provideDatabase() {
@@ -72,7 +61,7 @@ public class AppModule {
                 .allowMainThreadQueries()
                 .build();
     }
-    
+
     @Singleton
     @Provides
     EmployeeDao provideEmployeeDao(EmployeeDatabase database) {

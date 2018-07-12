@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 import javax.inject.Inject;
 
@@ -62,12 +62,12 @@ public class EditorActivity extends AppCompatActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EmployeeTrack.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         
         ButterKnife.bind(this);
-        EmployeeTrack.getAppComponent().inject(this);
-        
+
         Intent parentIntent = getIntent();
         
         viewModel = ViewModelProviders.of(this, factory).get(EditorActivityViewModel.class);
@@ -83,19 +83,9 @@ public class EditorActivity extends AppCompatActivity {
             }
         }
         
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveEmployee();
-            }
-        });
+        saveButton.setOnClickListener(v -> saveEmployee());
         
-        imagePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFilePicker();
-            }
-        });
+        imagePicker.setOnClickListener(v -> openFilePicker());
     }
     
     public void openFilePicker() {

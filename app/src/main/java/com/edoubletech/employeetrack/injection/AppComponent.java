@@ -15,7 +15,7 @@
  *
  */
 
-package com.edoubletech.employeetrack.dagger;
+package com.edoubletech.employeetrack.injection;
 
 import com.edoubletech.employeetrack.EditorActivity;
 import com.edoubletech.employeetrack.MainActivity;

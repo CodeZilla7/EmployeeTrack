@@ -24,7 +24,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 import java.util.List;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package com.edoubletech.employeetrack.data;
+package com.edoubletech.employeetrack.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

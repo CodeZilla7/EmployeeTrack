@@ -20,7 +20,7 @@ package com.edoubletech.employeetrack;
 import android.arch.lifecycle.ViewModel;
 
 import com.edoubletech.employeetrack.data.DataRepository;
-import com.edoubletech.employeetrack.data.Employee;
+import com.edoubletech.employeetrack.data.model.Employee;
 
 import javax.inject.Inject;
 
