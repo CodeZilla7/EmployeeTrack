@@ -15,20 +15,17 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.ui.editor;
 
 import android.arch.lifecycle.ViewModel;
 
 import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.data.model.Employee;
 
-import javax.inject.Inject;
-
 public class EditorActivityViewModel extends ViewModel {
     
     DataRepository mRepository;
     
-    @Inject
     public EditorActivityViewModel(DataRepository repository) {
         this.mRepository = repository;
     }

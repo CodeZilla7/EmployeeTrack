@@ -15,7 +15,7 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.ui.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.edoubletech.employeetrack.R;
 import com.edoubletech.employeetrack.data.model.Employee;
 
 import java.util.List;

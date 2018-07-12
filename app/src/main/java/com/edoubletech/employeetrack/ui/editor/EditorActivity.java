@@ -15,7 +15,7 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.ui.editor;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -30,6 +30,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.edoubletech.employeetrack.EmployeeTrack;
+import com.edoubletech.employeetrack.ui.Factory;
+import com.edoubletech.employeetrack.ui.main.MainActivity;
+import com.edoubletech.employeetrack.R;
 import com.edoubletech.employeetrack.data.model.Employee;
 
 import javax.inject.Inject;

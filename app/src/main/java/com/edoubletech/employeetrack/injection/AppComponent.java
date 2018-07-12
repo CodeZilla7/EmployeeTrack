@@ -17,8 +17,8 @@
 
 package com.edoubletech.employeetrack.injection;
 
-import com.edoubletech.employeetrack.EditorActivity;
-import com.edoubletech.employeetrack.MainActivity;
+import com.edoubletech.employeetrack.ui.editor.EditorActivity;
+import com.edoubletech.employeetrack.ui.main.MainActivity;
 
 import javax.inject.Singleton;
 

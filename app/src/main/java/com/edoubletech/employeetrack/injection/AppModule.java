@@ -21,7 +21,7 @@ package com.edoubletech.employeetrack.injection;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.edoubletech.employeetrack.Factory;
+import com.edoubletech.employeetrack.ui.Factory;
 import com.edoubletech.employeetrack.data.DataRepository;
 import com.edoubletech.employeetrack.data.database.EmployeeDao;
 import com.edoubletech.employeetrack.data.database.EmployeeDatabase;

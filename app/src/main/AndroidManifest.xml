@@ -16,6 +16,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.edoubletech.employeetrack">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -27,8 +28,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,12 +38,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditorActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".ui.editor.EditorActivity"
+            android:parentActivityName=".ui.main.MainActivity"
             android:theme="@style/EditorTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.main.MainActivity" />
         </activity>
     </application>
 

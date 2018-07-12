@@ -15,32 +15,36 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.ui.main;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
 
 import com.edoubletech.employeetrack.data.DataRepository;
+import com.edoubletech.employeetrack.data.model.Employee;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-public class Factory extends ViewModelProvider.NewInstanceFactory {
+public class MainActivityViewModel extends ViewModel {
     
-    DataRepository repository;
+    DataRepository mRepository;
     
     @Inject
-    public Factory(DataRepository repository) {
-        this.repository = repository;
+    public MainActivityViewModel(DataRepository repository) {
+        this.mRepository = repository;
     }
     
-    @NonNull
-    @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
-            return (T) new MainActivityViewModel(repository);
-        } else if (modelClass.isAssignableFrom(EditorActivityViewModel.class)) {
-            return (T) new EditorActivityViewModel(repository);
-        } else throw new IllegalArgumentException("Wrong view model");
+    public LiveData<List<Employee>> getListOfEmployees() {
+        return mRepository.getListOfEmployees();
+    }
+    
+    public void deleteEmployee(int id) {
+        mRepository.deleteEmployeeWithId(id);
+    }
+    
+    public void deleteEmployee(Employee employee) {
+        mRepository.deleteEmployee(employee);
     }
 }

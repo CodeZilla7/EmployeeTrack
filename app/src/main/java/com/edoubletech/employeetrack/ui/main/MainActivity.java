@@ -15,7 +15,7 @@
  *
  */
 
-package com.edoubletech.employeetrack;
+package com.edoubletech.employeetrack.ui.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -26,10 +26,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import com.edoubletech.employeetrack.EmployeeTrack;
+import com.edoubletech.employeetrack.R;
 import com.edoubletech.employeetrack.data.model.Employee;
+import com.edoubletech.employeetrack.ui.Factory;
+import com.edoubletech.employeetrack.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -51,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements EmployeeAdapter.L
 
     MainActivityViewModel viewModel;
     EmployeeAdapter mAdapter;
-
-    List<Employee> employees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
